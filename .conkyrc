@@ -1,0 +1,20 @@
+background no
+no_buffers yes
+out_to_console yes
+update_interval 1
+uppercase no
+use_spacer none
+total_run_times 0
+TEXT
+
+0 widget_tell bottom loadavg text LA::${loadavg}
+0 widget_tell bottom uptime text Uptime::${uptime_short}
+0 widget_tell bottom memory text MEM::${memperc}%::
+0 widget_tell bottom memory_am text ${mem}
+0 widget_tell bottom swap text SWAP::${swapperc}%
+0 widget_tell bottom fs_free_root text /::${fs_free_perc /}%
+0 widget_tell bottom fs_free_home text /home::${fs_free_perc /home}%
+0 widget_tell bottom downspeed text D/U::${downspeed eth0}KB
+0 widget_tell bottom upspeed text /${upspeed eth0}KB
+0 widget_tell bottom cpubar text CPU::${cpu cpu0}%::(${cpu cpu1}%,${cpu cpu2}%)
+0 widget_tell bottom diskio text DIO::${diskio /dev/sda2}

@@ -1,0 +1,8 @@
+directory = ~/desktop/media/down/torrents
+umask = 022
+check_hash = yes
+session = ~/desktop/media/down/torrents/session
+session_on_completion = yes
+session_save = yes
+schedule = watch_directory,5,5,load_start=~/desktop/media/down/torrents/*.torrent
+
