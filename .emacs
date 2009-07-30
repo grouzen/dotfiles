@@ -17,7 +17,7 @@
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
  '(ecb-compile-window-width (quote edit-window))
  '(ecb-layout-name "left8")
- '(ecb-options-version "2.32")
+ '(ecb-options-version "2.40")
  '(ecb-tree-indent 2)
  '(ecb-windows-width 0.18)
  '(global-font-lock-mode t nil (font-lock))
@@ -31,6 +31,9 @@
  '(tool-bar-mode nil)
  '(transient-mark-mode t))
 
+;; ORG-mode
+(add-to-list 'auto-mode-alist '("\\.org$" . org-mode)) 
+
 ;; Mercurial
 ;;(require 'mercurial)
 
@@ -42,7 +45,7 @@
 (add-to-list 'auto-mode-alist '("\\.engine$" . php-mode))
  
 ;; SLIME
-(setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
+(setq inferior-lisp-program "/usr/bin/sbcl")
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
 (require 'slime)
 (slime-setup)
@@ -65,13 +68,18 @@
 ;; Escreen
 (require 'escreen)
 
+;; CEDET
+(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+
 ;; ECB
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
 (require 'ecb)
+(ecb-activate)
 
 ;;Load CEDET
-;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
-(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/cedet/common")
+;;(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+;;(require 'cedet)
 
 ;; elib
 ;;(setq load-path (append (list "/usr/share/emacs/site-lisp/elib")
@@ -134,6 +142,15 @@
   (setq c-argdecl-indent 0)
   (setq c-label-offset -2))
 
+;; compile with gcc 
+(defun my-save-and-compile-gcc ()
+  "save and call copmile as gcc -Wall"
+  (interactive)
+  (save-buffer)
+  (compile (concat "gcc -Wall " (buffer-file-name)" -o " (file-name-sans-extension
+														  buffer-file-name)))
+  (message "Compilation executed!"))
+
 (add-hook 'c++-mode-hook 'my-ret-hook)
 (add-hook 'c-mode-hook 'my-ret-hook)
 (add-hook 'java-mode-hook 'my-ret-hook)
@@ -154,7 +171,7 @@
   ;; If there is more than one, they won't work right.
  )
 
-(global-set-key [f7] 'compile)
+(global-set-key [f7] 'my-save-and-compile-gcc)
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 
