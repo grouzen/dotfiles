@@ -1,0 +1,7 @@
+
+* DOWNLOAD
+** TODO "XP: A Common Lisp Pretty Printing System"
+*** DONE Download in home
+	[[ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-1102a.pdf][Lisp's format function describes]]
+*** TODO Download in work
+	[[ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-1102a.pdf][Lisp's format function describes]]
