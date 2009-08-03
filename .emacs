@@ -31,48 +31,53 @@
  '(tool-bar-mode nil)
  '(transient-mark-mode t))
 
+;; FB2 reader
+(add-to-list 'auto-mode-alist '("\\.fb2$" . fbread-mode))
+ 
+(defun fbread-mode ()
+  (interactive)
+  (sgml-mode)
+  (sgml-tags-invisible 0)
+  (longlines-mode)
+  (view-mode))
+
+;; HyperSpec
+(setq common-lisp-hyperspec-root "/home/grouzen/desktop/media/books/HyperSpec/")
+(setq common-lisp-hyperspec-symbol-table
+	  (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
+
 ;; ORG-mode
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
 (setq org-todo-keywords
-	  '((sequence "ACTIVE" "WAITING" "PAUSE" "|" "DONE" "CANCELLED")))
+	  '((sequence "TODO" "ACTIVE" "WAITING" "PAUSE" "|" "DONE" "CANCELLED")))
 
-;;;; WL START ;;;;
+;;;; WL START ;;;;;
 ;(load-file "/usr/share/emacs/site-lisp/wl/utils/ssl.el")
-;
+
 ;(autoload 'wl "wl" "Wanderlust" t)
 ;(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
 ;(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
-;
-;; IMAP
+
 ;(setq elmo-imap4-default-server "imap.gmail.com")
-;(setq elmo-imap4-default-user "gro19u89zen@gmail.com")
+;(setq elmo-imap4-default-user "vasiliy.l@gmail.com")
 ;(setq elmo-imap4-default-authenticate-type 'clear)
 ;(setq elmo-imap4-default-port '993)
 ;(setq elmo-imap4-default-stream-type 'ssl)
-;
-;(setq elmo-imap4-use-modified-utf7 t)
-;
-;; SMTP
+
 ;(setq wl-smtp-connection-type 'starttls)
 ;(setq wl-smtp-posting-port 587)
 ;(setq wl-smtp-authenticate-type "plain")
-;(setq wl-smtp-posting-user "gro19u89zen")
+;(setq wl-smtp-posting-user "grouzen")
 ;(setq wl-smtp-posting-server "smtp.gmail.com")
 ;(setq wl-local-domain "gmail.com")
-;
-;(setq wl-default-folder "%inbox")
-;(setq wl-default-spec "%")
-;(setq wl-draft-folder "%[Gmail]/Drafts") ; Gmail IMAP
-;(setq wl-trash-folder "%[Gmail]/Trash")
-;(setq wl-message-id-domain "gmail.com")
-;
-;(setq wl-folder-check-async t)
-;
+
 ;(setq elmo-imap4-use-modified-utf7 t)
-;
+
+;; set mail-user-agent to wl
 ;(autoload 'wl-user-agent-compose "wl-draft" nil t)
+
 ;(if (boundp 'mail-user-agent)
-;	(setq mail-user-agent 'wl-user-agent))
+;    (setq mail-user-agent 'wl-user-agent))
 ;(if (fboundp 'define-mail-user-agent)
 ;	(define-mail-user-agent
 ;	  'wl-user-agent
@@ -80,113 +85,77 @@
 ;	  'wl-draft-send
 ;	  'wl-draft-kill
 ;	  'mail-send-hook))
-;
-;;;; WL END ;;;;;;
-;;;; WL START ;;;;;
-(load-file "/usr/share/emacs/site-lisp/wl/utils/ssl.el")
 
-(autoload 'wl "wl" "Wanderlust" t)
-(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
+;(setq user-mail-address "gro19u89zen@gmail.com")
+;(setq wl-from "Michail <gro19u89zen@gmail.com>")
 
-(setq elmo-imap4-default-server "imap.gmail.com")
-(setq elmo-imap4-default-user "vasiliy.l@gmail.com")
-(setq elmo-imap4-default-authenticate-type 'clear)
-(setq elmo-imap4-default-port '993)
-(setq elmo-imap4-default-stream-type 'ssl)
+;; folder custom variables
+;(setq wl-folders-file "~/Mail/.folders"
+;	  wl-stay-folder-window t
+;	  wl-folder-window-width 50
+;	  wl-interactive-save-folders nil
+;	  wl-fldmgr-make-backup t
+;	  )
 
-(setq wl-smtp-connection-type 'starttls)
-(setq wl-smtp-posting-port 587)
-(setq wl-smtp-authenticate-type "plain")
-(setq wl-smtp-posting-user "grouzen")
-(setq wl-smtp-posting-server "smtp.gmail.com")
-(setq wl-local-domain "gmail.com")
-
-(setq elmo-imap4-use-modified-utf7 t)
-
-;; set mail-user-agent to wl
-(autoload 'wl-user-agent-compose "wl-draft" nil t)
-
-(if (boundp 'mail-user-agent)
-    (setq mail-user-agent 'wl-user-agent))
-(if (fboundp 'define-mail-user-agent)
-	(define-mail-user-agent
-	  'wl-user-agent
-	  'wl-user-agent-compose
-	  'wl-draft-send
-	  'wl-draft-kill
-	  'mail-send-hook))
-
-(setq user-mail-address "gro19u89zen@gmail.com")
-(setq wl-from "Michail <gro19u89zen@gmail.com>")
-
-; folder custom variables
-(setq wl-folders-file "~/Mail/.folders"
-	  wl-stay-folder-window t
-	  wl-folder-window-width 50
-	  wl-interactive-save-folders nil
-	  wl-fldmgr-make-backup t
-	  )
-
-(setq wl-default-folder "%inbox")
-(setq wl-default-spec "%")
-(setq wl-draft-folder "%[Gmail]/Drafts") ; Gmail IMAP
-(setq wl-trash-folder "%[Gmail]/Trash")
+;(setq wl-default-folder "%inbox")
+;(setq wl-default-spec "%")
+;(setq wl-draft-folder "%[Gmail]/Drafts") ; Gmail IMAP
+;(setq wl-trash-folder "%[Gmail]/Trash")
 
 ;; hide many fields from message buffers
-(setq wl-message-ignored-field-list '("^.*:")
-	  wl-message-visible-field-list
-	  '("^\\(From\\|Reply-To\\):"
-		"^\\(To\\|Cc\\):"
-		"^Subject:"
-		"^\\(Posted\\|Date\\):"
-		"^Organization:"
-		"^Message-Id:"
-		)
+;(setq wl-message-ignored-field-list '("^.*:")
+;	  wl-message-visible-field-list
+;	  '("^\\(From\\|Reply-To\\):"
+;		"^\\(To\\|Cc\\):"
+;		"^Subject:"
+;		"^\\(Posted\\|Date\\):"
+;		"^Organization:"
+;		"^Message-Id:"
+;		)
 	  
-	  wl-message-sort-field-list
-	  '("^\\(From\\|Reply-To\\):"
-		"^\\(To\\|Cc\\):"
-		"^Subject:"
-		"^\\(Posted\\|Date\\):"
-		"^Organization:"
-		"^Message-Id:"
-		)
-	  )
+;	  wl-message-sort-field-list
+;	  '("^\\(From\\|Reply-To\\):"
+;		"^\\(To\\|Cc\\):"
+;		"^Subject:"
+;		"^\\(Posted\\|Date\\):"
+;		"^Organization:"
+;		"^Message-Id:"
+;		)
+;	  )
 
 ;; I don't need prefetching
-(setq wl-message-buffer-prefetch-folder-type-list nil)
+;(setq wl-message-buffer-prefetch-folder-type-list nil)
 
 ;; display full message header
-(setq wl-summary-width nil)
+;(setq wl-summary-width nil)
 
 ;; Fetch larger messages
-(setq elmo-message-fetch-threshold 500000
-	        wl-prefetch-confirm nil)
+;(setq elmo-message-fetch-threshold 500000
+;	        wl-prefetch-confirm nil)
 
 ;; a little bigger summary buffer
-(setq wl-message-window-size '(1 . 2))
+;(setq wl-message-window-size '(1 . 2))
 
 ;; delete myself from recepients
-(setq wl-draft-always-delete-myself t)
+;(setq wl-draft-always-delete-myself t)
 
 ;; use 8bit encoding
-(setq-default mime-transfer-level 8)
+;(setq-default mime-transfer-level 8)
 
 ;; faces
 
-(custom-set-faces
+;(custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(wl-highlight-message-citation-header ((((class color) (background light)) (:foreground "LightGray"))))
- '(wl-highlight-message-header-contents ((t (:foreground "white" :weight bold))))
- '(wl-highlight-message-important-header-contents ((t (:foreground "white" :weight bold))))
- '(wl-highlight-message-important-header-contents2 ((t (:foreground " " :weight bold))))
- '(wl-highlight-message-signature ((((class color) (background light)) (:foreground "grey"))))
- '(wl-highlight-message-unimportant-header-contents ((t (:foreground "LightGray" :weight bold))))
- '(wl-highlight-summary-normal-face ((((class color) (background light)) (:foreground "LightGreen")))))
+; '(wl-highlight-message-citation-header ((((class color) (background light)) (:foreground "LightGray"))))
+; '(wl-highlight-message-header-contents ((t (:foreground "white" :weight bold))))
+; '(wl-highlight-message-important-header-contents ((t (:foreground "white" :weight bold))))
+; '(wl-highlight-message-important-header-contents2 ((t (:foreground " " :weight bold))))
+; '(wl-highlight-message-signature ((((class color) (background light)) (:foreground "grey"))))
+; '(wl-highlight-message-unimportant-header-contents ((t (:foreground "LightGray" :weight bold))))
+; '(wl-highlight-summary-normal-face ((((class color) (background light)) (:foreground "LightGreen")))))
 
 ;;;; WL END ;;;;
 

@@ -1,0 +1,62 @@
+;;; -*- lisp -*-
+(in-package :stumpwm)
+
+;; common font
+(set-font "-*-snap-*-*-*-*-10-*-*-*-*-*-iso10646-1")
+
+;; modules
+(load "/sources/builds/stumpwm-0.9.5-1/contrib/cpu.lisp")
+(load "/sources/builds/stumpwm-0.9.5-1/contrib/mem.lisp")
+(load "/sources/builds/stumpwm-0.9.5-1/contrib/net.lisp")
+
+;; mode-line colors
+(setf *mode-line-background-color* "black")
+(setf *mode-line-foreground-color* "orange")
+(setf *mode-line-border-color* "orange")
+
+(setf *screen-mode-line-format*
+	  (list "[ "
+			'(:eval (run-shell-command
+						  "date '+%a %d %b %H:%M:%S' | tr -d [:cntrl:]"
+						  t))
+			" ] "
+			"[ %n ] "
+			"[%c] " ;; cpu
+			"[%M] " ;; mem
+			"[%l] " ;; net
+			"%W"))
+
+;(defun update-mode-line ()
+;  "Update mode line"
+;  (let ((screen (current-screen)))
+;	(when (screen-mode-line screen)
+;	  (redraw-mode-line-for (screen-mode-line screen) screen))))
+
+;#+sbcl (sb-ext:shedule-timer
+;		*mode-line-timer* (sb-ext:make-timer
+;						   #'update-mode-line
+;						   :name "mode-line-updating"
+;						   :thread (car (last (sb-thread:list-all-threads)))))
+
+;#+sbcl (sb-ext:shedule-timer *mode-line-timer* 5 :repeat-interval 10 :absolue-p nil)
+
+(run-commands "mode-line")
+
+;; input and message panels
+(set-bg-color "black")
+(set-fg-color "orange")
+(set-border-color "orange")
+(setf *message-window-gravity* :bottom-right)
+(setf *input-window-gravity* :bottom-right)
+(set-normal-gravity :center)
+(set-win-bg-color "black")
+
+(set-focus-color "orange")
+(set-unfocus-color "black")
+
+(setf *frame-number-map* "1234567890")
+(setf (group-name (first (screen-groups (current-screen)))) "1")
+
+;; keys
+(define-key *root-map* (kbd "C-c") "exec urxvt")
+(define-key *root-map* (kbd "c") "exec urxvt")
