@@ -1,6 +1,0 @@
-
-* Текущие
-** TODO Practical Common Lisp
-   229 стр
-** TODO Криптономикон 
-   26xx
