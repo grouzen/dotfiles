@@ -12,25 +12,82 @@
  '(current-language-environment "UTF-8")
  '(cursor-in-non-selected-windows nil)
  '(default-input-method "rfc1345")
- '(ecb-compilation-buffer-names (quote (("*Calculator*") ("*vc*") ("*vc-diff*") ("*Apropos*") ("*Occur*") ("*shell*" . t) ("\\*[cC]ompilation.*\\*" . t) ("*JDEE Compile Server*") ("*Help*") ("*Completions*") ("*Backtrace*" . t) ("*Compile-log*") ("*bsh*") ("*Messages*"))))
- '(ecb-compile-window-height 10)
+ '(ecb-compilation-buffer-names (quote (("*Calculator*") ("*vc*") ("*vc-diff*") ("*Apropos*") ("*Occur*") ("*shell*" . t) ("\\*[cC]ompilation.*\\*" . t) ("*JDEE Compile Server*") ("*Help*") ("*Completions*") ("*Backtrace*" . t) ("*Compile-log*") ("*bsh*") ("*Messages*") ("\\*gud-.*\\*" . t))))
+ '(ecb-compile-window-height 4)
  '(ecb-compile-window-temporally-enlarge (quote after-selection))
  '(ecb-compile-window-width (quote edit-window))
  '(ecb-layout-name "left8")
- '(ecb-options-version "2.32")
- '(ecb-tree-indent 2)
- '(ecb-windows-width 0.18)
+ '(ecb-options-version "2.40")
+ '(ecb-tree-indent 1)
+ '(ecb-windows-width 0.12)
  '(global-font-lock-mode t nil (font-lock))
  '(jabber-account-list (quote (("grouzen@jabber.ru" (:password . "poteraysmisl") (:network-server . "jabber.ru") (:port . 5222) (:connection-type . network)))))
  '(jabber-default-show "")
  '(menu-bar-mode nil nil (menu-bar))
+ '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
  '(show-paren-mode t)
  '(standart-indent 4)
  '(tab-width 4)
  '(tool-bar-mode nil)
- '(transient-mark-mode t))
+ '(transient-mark-mode t)
+ '(truncate-lines t))
 
+(setq-default indent-tabs-mode nil)
+;(toggle-word-wrap 1)
+;(toggle-truncate-lines 1)
+
+;; VM
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/vm")
+
+;(autoload 'vm "vm" "Start VM on your primary inbox." t)
+;(autoload 'vm-other-frame "vm" "Like `vm' but starts in another frame." t)
+;(autoload 'vm-visit-folder "vm" "Start VM on an arbitrary folder." t)
+;(autoload 'vm-visit-virtual-folder "vm" "Visit a VM virtual folder." t)
+;(autoload 'vm-mode "vm" "Run VM major mode on a buffer" t)
+;(autoload 'vm-mail "vm" "Send a mail message using VM." t)
+;(autoload 'vm-submit-bug-report "vm" "Send a bug report about VM." t)
+
+;(setq user-full-name "Michail N."
+;      user-mail-address "gro19u89zen@gmail.com"
+;      vm-spool-files
+;      '(("/home/grouzen/Mail/INBOX"
+;         "pop-ssl:pop.gmail.com:995:pass:username:*"
+;         "/home/grouzen/Mail/INBOX.CRASH")))
+
+;; GNUS
+(setq gnus-select-method '(nnimap "gmail"
+                                  (nnimap-address "imap.gmail.com")
+                                  (nnimap-server-port 993)
+                                  (nnimap-stream ssl)))
+
+(setq sendmail-program "/usr/bin/msmtp")
+(setq message-send-mail-function 'message-send-mail-with-sendmail)
+
+;; Javascript-mode
+(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+(autoload 'javascript-mode "javascript" nil t)
+
+;; tpl files like html
+(add-to-list 'auto-mode-alist '("\\.tpl$"  . html-mode))
+
+;; backup files *~
+(setq
+ backup-by-copying t
+ backup-directory-alist '(("." . "~/emacs-backups/"))
+ delete-old-versions t
+ kept-new-versions 6
+ kept-old-version 2
+ version-control t)
+
+;; color-theme
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/color-theme/")
+(require 'color-theme)
+(eval-after-load "color-theme"
+  '(progn
+	 (color-theme-initialize)
+	 (color-theme-gtk-ide)))
+ 
 ;; FB2 reader
 (add-to-list 'auto-mode-alist '("\\.fb2$" . fbread-mode))
  
@@ -51,113 +108,23 @@
 (setq org-todo-keywords
 	  '((sequence "TODO" "ACTIVE" "WAITING" "PAUSE" "|" "DONE" "CANCELLED")))
 
-;;;; WL START ;;;;;
-;(load-file "/usr/share/emacs/site-lisp/wl/utils/ssl.el")
+;; Wanderlust
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/apel")
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/flim")
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/semi")
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/wl")
+;(add-to-list 'load-path
+;			 (expand-file-name "packages/apel" user-emacs-directory))
+;(add-to-list 'load-path
+;			 (expand-file-name "packages/flim" user-emacs-directory))
+;(add-to-list 'load-path
+;			 (expand-file-name "packages/semi" user-emacs-directory))
+;(add-to-list 'load-path
+;			 (expand-file-name "packages/more-wl/wl" user-emacs-directory))
+;(add-to-list 'load-path
+;			 (expand-file-name "packages/more-wl/elmo" user-emacs-directory))
 
-;(autoload 'wl "wl" "Wanderlust" t)
-;(autoload 'wl-other-frame "wl" "Wanderlust on new frame." t)
-;(autoload 'wl-draft "wl-draft" "Write draft with Wanderlust." t)
-
-;(setq elmo-imap4-default-server "imap.gmail.com")
-;(setq elmo-imap4-default-user "vasiliy.l@gmail.com")
-;(setq elmo-imap4-default-authenticate-type 'clear)
-;(setq elmo-imap4-default-port '993)
-;(setq elmo-imap4-default-stream-type 'ssl)
-
-;(setq wl-smtp-connection-type 'starttls)
-;(setq wl-smtp-posting-port 587)
-;(setq wl-smtp-authenticate-type "plain")
-;(setq wl-smtp-posting-user "grouzen")
-;(setq wl-smtp-posting-server "smtp.gmail.com")
-;(setq wl-local-domain "gmail.com")
-
-;(setq elmo-imap4-use-modified-utf7 t)
-
-;; set mail-user-agent to wl
-;(autoload 'wl-user-agent-compose "wl-draft" nil t)
-
-;(if (boundp 'mail-user-agent)
-;    (setq mail-user-agent 'wl-user-agent))
-;(if (fboundp 'define-mail-user-agent)
-;	(define-mail-user-agent
-;	  'wl-user-agent
-;	  'wl-user-agent-compose
-;	  'wl-draft-send
-;	  'wl-draft-kill
-;	  'mail-send-hook))
-
-;(setq user-mail-address "gro19u89zen@gmail.com")
-;(setq wl-from "Michail <gro19u89zen@gmail.com>")
-
-;; folder custom variables
-;(setq wl-folders-file "~/Mail/.folders"
-;	  wl-stay-folder-window t
-;	  wl-folder-window-width 50
-;	  wl-interactive-save-folders nil
-;	  wl-fldmgr-make-backup t
-;	  )
-
-;(setq wl-default-folder "%inbox")
-;(setq wl-default-spec "%")
-;(setq wl-draft-folder "%[Gmail]/Drafts") ; Gmail IMAP
-;(setq wl-trash-folder "%[Gmail]/Trash")
-
-;; hide many fields from message buffers
-;(setq wl-message-ignored-field-list '("^.*:")
-;	  wl-message-visible-field-list
-;	  '("^\\(From\\|Reply-To\\):"
-;		"^\\(To\\|Cc\\):"
-;		"^Subject:"
-;		"^\\(Posted\\|Date\\):"
-;		"^Organization:"
-;		"^Message-Id:"
-;		)
-	  
-;	  wl-message-sort-field-list
-;	  '("^\\(From\\|Reply-To\\):"
-;		"^\\(To\\|Cc\\):"
-;		"^Subject:"
-;		"^\\(Posted\\|Date\\):"
-;		"^Organization:"
-;		"^Message-Id:"
-;		)
-;	  )
-
-;; I don't need prefetching
-;(setq wl-message-buffer-prefetch-folder-type-list nil)
-
-;; display full message header
-;(setq wl-summary-width nil)
-
-;; Fetch larger messages
-;(setq elmo-message-fetch-threshold 500000
-;	        wl-prefetch-confirm nil)
-
-;; a little bigger summary buffer
-;(setq wl-message-window-size '(1 . 2))
-
-;; delete myself from recepients
-;(setq wl-draft-always-delete-myself t)
-
-;; use 8bit encoding
-;(setq-default mime-transfer-level 8)
-
-;; faces
-
-;(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
-; '(wl-highlight-message-citation-header ((((class color) (background light)) (:foreground "LightGray"))))
-; '(wl-highlight-message-header-contents ((t (:foreground "white" :weight bold))))
-; '(wl-highlight-message-important-header-contents ((t (:foreground "white" :weight bold))))
-; '(wl-highlight-message-important-header-contents2 ((t (:foreground " " :weight bold))))
-; '(wl-highlight-message-signature ((((class color) (background light)) (:foreground "grey"))))
-; '(wl-highlight-message-unimportant-header-contents ((t (:foreground "LightGray" :weight bold))))
-; '(wl-highlight-summary-normal-face ((((class color) (background light)) (:foreground "LightGreen")))))
-
-;;;; WL END ;;;;
+;(load-file "~/.wl")
 
 ;; Mercurial
 ;;(require 'mercurial)
@@ -170,17 +137,70 @@
 (add-to-list 'auto-mode-alist '("\\.engine$" . php-mode))
  
 ;; SLIME
-(setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
+(setq inferior-lisp-program "/usr/bin/sbcl")
+;(setq slime-lisp-implementations
+;	  '((sbcl ("sbcl") :coding-system utf-8-unix)
+;		(mit-scheme ("mit-scheme")
+;					:coding-system utf-8-unix
+;					:init mit-scheme-init)))
+(setq slime-net-coding-system 'utf-8-unix)
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
 (require 'slime)
-(slime-setup)
+(require 'slime-autoloads)
+(slime-setup
+  '(slime-fancy slime-scratch slime-editing-commands slime-fuzzy
+				slime-presentations slime-scheme))
+
+(defmacro lisp-slime (lisp path &optional coding)
+  (let ((funname (intern (format "%s-slime" lisp))))
+    `(defun ,funname ()
+       (interactive)
+       (let ((inferior-lisp-program ,path)
+             (slime-net-coding-system (or ,coding 'utf-8-unix)))
+         (slime)))))
+
+;(lisp-slime sbcl "/usr/bin/sbcl")
+;(lisp-slime clisp "/usr/bin/clisp")
+        
+;  (slime 'sbcl))
+;
+;(defun mit-scheme-slime ()
+;  (interactive)
+;  (let ((inferior-lisp-program "/usr/bin/mit-scheme"))
+;  (slime 'mit-scheme)))
+
+;(defun mit-scheme-init (file encoding)
+;  (setq slime-protocol-version 'ignore)
+;  (format "%S\n\n"
+;		  `(begin
+;			(load-option 'format)
+;			(load-option 'sos)
+;			(eval
+;			 '(construct-normal-package-from-description
+;			   (make-package-description '(swank) '(())
+;										 (vector) (vector) (vector) false))
+;			 (->environment '(package)))
+;			(load ,(expand-file-name
+;					"/usr/share/emacs/site-lisp/slime/contrib/swank-mit-scheme.scm"
+;					slime-path)
+;				  (->environment '(swank)))
+;			(eval '(start-swank ,file) (->environment '(swank))))))
+
+;(defun find-mit-scheme-package ()
+;  (save-excursion
+;	(let ((case-fold-search t))
+;	  (and (re-search-backward "^[;]+ package: \\((.+)\\).*$" nil t)
+;		   (match-string-no-properties 1)))))
+
+;(setq slime-find-buffer-package-function 'find-mit-scheme-package)
+;; END SLIME
 
 ;; Jabber.el
 ;;(require 'jabber)
 ;;(require 'jabber-autoloads)
 ;;(jabber-connect-all)
 ;; (("grouzen@jabber.ru"
- ;; (:password . "poteraysmisl")
+ ;; (:password . "")
  ;; (:connection-type . network)))
 
 ;; IDO
@@ -193,13 +213,14 @@
 ;; Escreen
 (require 'escreen)
 
+;;Load CEDET
+(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
+
 ;; ECB
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
 (require 'ecb)
-
-;;Load CEDET
-;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
-(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+(ecb-activate)
 
 ;; elib
 ;;(setq load-path (append (list "/usr/share/emacs/site-lisp/elib")
@@ -261,7 +282,11 @@
   (setq c-brace-offset -2)
   (setq c-argdecl-indent 0)
   (setq c-label-offset -2))
+(defun my-scheme-mode-hook ()
+  (setq tab-width 2))
 
+(add-hook 'scheme-mode-hook 'my-ret-hook)
+(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'c++-mode-hook 'my-ret-hook)
 (add-hook 'c-mode-hook 'my-ret-hook)
 (add-hook 'java-mode-hook 'my-ret-hook)
@@ -274,19 +299,27 @@
 (add-hook 'css-mode-hook 'my-ret-hook)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'javascript-mode-hook 'my-ret-hook)
+(add-hook 'php-mode-hook 'my-ret-hook)
 
 (custom-set-faces
   ;; custom-set-faces was added by Custom.
   ;; If you edit it by hand, you could mess it up, so be careful.
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
- )
+ '(wl-highlight-message-citation-header ((((class color) (background light)) (:foreground "LightGray"))))
+ '(wl-highlight-message-header-contents ((t (:foreground "white" :weight bold))))
+ '(wl-highlight-message-important-header-contents ((t (:foreground "white" :weight bold))))
+ '(wl-highlight-message-important-header-contents2 ((t (:foreground " " :weight bold))))
+ '(wl-highlight-message-signature ((((class color) (background light)) (:foreground "grey"))))
+ '(wl-highlight-message-unimportant-header-contents ((t (:foreground "LightGray" :weight bold))))
+ '(wl-highlight-summary-normal-face ((((class color) (background light)) (:foreground "LightGreen")))))
 
 (defun my-save-and-compile-gcc ()
   "save and call copmile as gcc -Wall"
   (interactive)
   (save-buffer)
-  (compile (concat "gcc -Wall " (buffer-file-name)" -o " (file-name-sans-extension
+  (compile (concat "gcc -g -Wall " (buffer-file-name)" -o " (file-name-sans-extension
 														  buffer-file-name)))
   (message "Compilation executed!"))
 
@@ -304,6 +337,7 @@
 (global-set-key (kbd "\e\egc") 'ecb-goto-window-compilation)
 (global-set-key (kbd "\e\eg1") 'ecb-goto-window-edit1)
 (global-set-key (kbd "\e\eg2") 'ecb-goto-window-edit2)
+(global-set-key (kbd "\e\egt") 'ecb-toggle-ecb-windows)
 (global-set-key (kbd "\e\ee")  'eshell)
 
 (global-set-key (kbd "\e\ewl") 'escreen-goto-last-screen)
