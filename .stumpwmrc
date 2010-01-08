@@ -3,16 +3,21 @@
 
 ;; common font
 (set-font "-*-snap-*-*-*-*-10-*-*-*-*-*-iso10646-1")
+;(set-font "-misc-dejavu sans condensed-medium-r-semicondensed--0-0-0-0-p-0-iso10646-1")
 
 ;; modules
-(load "/sources/builds/stumpwm-0.9.5-1/contrib/cpu.lisp")
-(load "/sources/builds/stumpwm-0.9.5-1/contrib/mem.lisp")
-(load "/sources/builds/stumpwm-0.9.5-1/contrib/net.lisp")
+(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/cpu.lisp")
+(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/mem.lisp")
+(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/net.lisp")
+;(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/battery.lisp")
+;(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/battery-portable.lisp")
+(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/disk.lisp")
 
 ;; mode-line colors
 (setf *mode-line-background-color* "black")
 (setf *mode-line-foreground-color* "orange")
 (setf *mode-line-border-color* "orange")
+(setf *mode-line-timeout* 1)
 
 (setf *screen-mode-line-format*
 	  (list "[ "
@@ -21,8 +26,10 @@
 						  t))
 			" ] "
 			"[ %n ] "
+			;"[%b] " ;; bat
 			"[%c] " ;; cpu
 			"[%M] " ;; mem
+			;"[%D] " ;; disk
 			"[%l] " ;; net
 			"%W"))
 
@@ -49,10 +56,10 @@
 (setf *message-window-gravity* :bottom-right)
 (setf *input-window-gravity* :bottom-right)
 (set-normal-gravity :center)
-(set-win-bg-color "black")
+(set-win-bg-color "white")
 
 (set-focus-color "orange")
-(set-unfocus-color "black")
+(set-unfocus-color "blue")
 
 (setf *frame-number-map* "1234567890")
 (setf (group-name (first (screen-groups (current-screen)))) "1")
