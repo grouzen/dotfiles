@@ -21,7 +21,7 @@
  '(ecb-tree-indent 1)
  '(ecb-windows-width 0.12)
  '(global-font-lock-mode t nil (font-lock))
- '(jabber-account-list (quote (("grouzen@jabber.ru" (:password . "poteraysmisl") (:network-server . "jabber.ru") (:port . 5222) (:connection-type . network)))))
+ '(jabber-account-list (quote (("grouzen@jabber.ru" (:password . "") (:network-server . "jabber.ru") (:port . 5222) (:connection-type . network)))))
  '(jabber-default-show "")
  '(menu-bar-mode nil nil (menu-bar))
  '(scheme-program-name "guile")
@@ -83,10 +83,11 @@
 ;; color-theme
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/color-theme/")
 (require 'color-theme)
+(load "~/.emacs.d/.color-themes.el")
 (eval-after-load "color-theme"
   '(progn
 	 (color-theme-initialize)
-	 (color-theme-gtk-ide)))
+	 (color-theme-stumpwm)))
  
 ;; FB2 reader
 (add-to-list 'auto-mode-alist '("\\.fb2$" . fbread-mode))
@@ -137,7 +138,7 @@
 (add-to-list 'auto-mode-alist '("\\.engine$" . php-mode))
  
 ;; SLIME
-(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq inferior-lisp-program "/usr/local/bin/sbcl")
 ;(setq slime-lisp-implementations
 ;	  '((sbcl ("sbcl") :coding-system utf-8-unix)
 ;		(mit-scheme ("mit-scheme")
@@ -320,7 +321,7 @@
   (interactive)
   (save-buffer)
   (compile (concat "gcc -g -Wall " (buffer-file-name)" -o " (file-name-sans-extension
-														  buffer-file-name)))
+                                                             buffer-file-name)))
   (message "Compilation executed!"))
 
 (global-set-key [f7] 'my-save-and-compile-gcc)

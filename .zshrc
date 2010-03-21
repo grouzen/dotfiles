@@ -15,8 +15,9 @@ prompt grouzen
 autoload -Uz compinit && compinit
 autoload -U colors && colors
 
-alias mplayerxy="mplayer -vo x11 -zoom -ao alsa"
-alias mplayerxn="mplayer -vo x11 -zoom -ao null"
+alias mplayerxy="mplayer -vo xv -zoom -ao alsa 2>&1 > /dev/null"
+alias mplayerxn="mplayer -vo xv -zoom -ao null 2>&1 > /dev/null"
+alias mplayerxc="mplayer -tv driver=v4l2:device=/dev/video0 tv://"
 alias ls="ls --color=auto --group-directories-first"
 alias transsets="transset 0.65 > /dev/null"
 alias transsetx="transset 0.8 > /dev/null"
@@ -27,19 +28,23 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g NULL="> /dev/null"
 
-PATH="/bin:/usr/bin:/usr/sbin:/usr/local/bin:/opt/java/bin:/usr/X11/bin:/opt/schily/bin"; 
+export LC_ALL=en_US.UTF-8
+PATH="/bin:/usr/bin:/usr/local/bin:/usr/X11/bin:/usr/lib/java/bin:/usr/local/php5.3/bin"; 
 export PATH
 AWT_TOOLKIT="MToolkit"; export AWT_TOOLKIT
 BLOCKSIZE="Mb"; export BLOCKSIZE
 EDITOR="vim"; export EDITOR
 PAGER="less"; export PAGER
 GREP_OPTIONS="--color=auto"; export GREP_OPTIONS
-LD_LIBRARY_PATH="/usr/lib"; export LD_LIBRARY_PATH
+LD_LIBRARY_PATH="/usr/lib:/usr/local/php5.3/lib"; export LD_LIBRARY_PATH
+
+#if [ ${TERM} = "rxvt-unicode" ]; then
+#	export TERM=rxvt
+#fi
 
 # SBCL ENVIROMENT
-PATH=${PATH}:/opt/sbcl/bin; export PATH
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/sbcl/lib/sbcl; export LD_LIBRARY_PATH
-SBCL_HOME=/opt/sbcl/lib/sbcl; export SBCL_HOME
+#SBCL_HOME=/usr/lib/sbcl; export SBCL_HOME
+SBCL_HOME=/usr/local/lib/sbcl; export SBCL_HOME
 
 #CLASSPATH=
 #for jar in /opt/javaprog/*
@@ -47,7 +52,6 @@ SBCL_HOME=/opt/sbcl/lib/sbcl; export SBCL_HOME
 #        CLASSPATH=":$jar$CLASSPATH"
 #done
 #CLASSPATH=":/opt/java/lib$CLASSPATH"; export CLASSPATH
-
 
 setopt autocd
 setopt CORRECT
@@ -96,7 +100,7 @@ umask 022
 
 # Установка заголовка терминала
 case $TERM in
-	rxvt-unicode*)
+	rxvt*)
 	precmd () {
 		print -Pn "\033]0;%n@%m%% %~ \a"
 	}
