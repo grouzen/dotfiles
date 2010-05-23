@@ -1,0 +1,4 @@
+#!/bin/bash
+mencoder tv:// driver=v4l2:width=320:height=240:device=/dev/video0 -nosound -ovc lavc -o ~/desktop/media/video/camrecs/`date +'%Y-%m-%d-%H%M%S'`_record.avi 2>&1 > /dev/null
+exit 0
+

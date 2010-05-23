@@ -1,0 +1,9 @@
+#!/bin/sh
+
+BROWSER=firefox
+
+case "$*" in
+    \#*) $BROWSER http://juick.com/`echo "$*" | sed 's/#//' | sed 's/\//#/'` ;;
+    *) $BROWSER "$*" ;;
+esac
+

@@ -37,6 +37,10 @@
 ;(toggle-word-wrap 1)
 ;(toggle-truncate-lines 1)
 
+;; Display statistic in the status bar
+(display-battery-mode)
+;(display-time-mode)
+
 ;; VM
 ;(add-to-list 'load-path "/usr/share/emacs/site-lisp/vm")
 
@@ -54,6 +58,16 @@
 ;      '(("/home/grouzen/Mail/INBOX"
 ;         "pop-ssl:pop.gmail.com:995:pass:username:*"
 ;         "/home/grouzen/Mail/INBOX.CRASH")))
+
+;; nxhtml-mode
+; (load "/usr/share/emacs/site-lisp/nxhtml/autostart.el")
+
+;; Haskell-mode
+(setq haskell-font-lock-symbols t)
+(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-indentation)
 
 ;; GNUS
 (setq gnus-select-method '(nnimap "gmail"
@@ -150,15 +164,15 @@
 (require 'slime-autoloads)
 (slime-setup
   '(slime-fancy slime-scratch slime-editing-commands slime-fuzzy
-				slime-presentations slime-scheme))
+				slime-presentations slime-scheme slime-repl))
 
-(defmacro lisp-slime (lisp path &optional coding)
-  (let ((funname (intern (format "%s-slime" lisp))))
-    `(defun ,funname ()
-       (interactive)
-       (let ((inferior-lisp-program ,path)
-             (slime-net-coding-system (or ,coding 'utf-8-unix)))
-         (slime)))))
+;(defmacro lisp-slime (lisp path &optional coding)
+;  (let ((funname (intern (format "%s-slime" lisp))))
+;    `(defun ,funname ()
+;       (interactive)
+;       (let ((inferior-lisp-program ,path)
+;             (slime-net-coding-system (or ,coding 'utf-8-unix)))
+;         (slime)))))
 
 ;(lisp-slime sbcl "/usr/bin/sbcl")
 ;(lisp-slime clisp "/usr/bin/clisp")
