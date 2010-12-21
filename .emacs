@@ -38,7 +38,7 @@
 ;(toggle-truncate-lines 1)
 
 ;; Display statistic in the status bar
-(display-battery-mode)
+;(display-battery-mode)
 ;(display-time-mode)
 
 ;; VM
@@ -49,7 +49,7 @@
 ;(autoload 'vm-visit-folder "vm" "Start VM on an arbitrary folder." t)
 ;(autoload 'vm-visit-virtual-folder "vm" "Visit a VM virtual folder." t)
 ;(autoload 'vm-mode "vm" "Run VM major mode on a buffer" t)
-;(autoload 'vm-mail "vm" "Send a mail message using VM." t)
+;';(autoload 'vm-mail "vm" "Send a mail message using VM." t)
 ;(autoload 'vm-submit-bug-report "vm" "Send a bug report about VM." t)
 
 ;(setq user-full-name "Michail N."
@@ -70,17 +70,17 @@
 (add-hook 'haskell-mode-hook 'turn-on-indentation)
 
 ;; GNUS
-(setq gnus-select-method '(nnimap "gmail"
-                                  (nnimap-address "imap.gmail.com")
-                                  (nnimap-server-port 993)
-                                  (nnimap-stream ssl)))
+;(setq gnus-select-method '(nnimap "gmail"
+;                                  (nnimap-address "imap.gmail.com")
+;                                  (nnimap-server-port 993)
+;                                  (nnimap-stream ssl)))
 
-(setq sendmail-program "/usr/bin/msmtp")
-(setq message-send-mail-function 'message-send-mail-with-sendmail)
+;(setq sendmail-program "/usr/bin/msmtp")
+;(setq message-send-mail-function 'message-send-mail-with-sendmail)
 
 ;; Javascript-mode
-(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
-(autoload 'javascript-mode "javascript" nil t)
+;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+;(autoload 'javascript-mode "javascript" nil t)
 
 ;; tpl files like html
 (add-to-list 'auto-mode-alist '("\\.tpl$"  . html-mode))
@@ -114,9 +114,9 @@
   (view-mode))
 
 ;; HyperSpec
-(setq common-lisp-hyperspec-root "/home/grouzen/desktop/media/books/HyperSpec/")
-(setq common-lisp-hyperspec-symbol-table
-	  (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
+;(setq common-lisp-hyperspec-root "/home/grouzen/desktop/media/books/HyperSpec/")
+;(setq common-lisp-hyperspec-symbol-table
+;	  (concat common-lisp-hyperspec-root "Data/Map_Sym.txt"))
 
 ;; ORG-mode
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -146,13 +146,10 @@
 
 ;; PHP-mode
 (require 'php-mode)
-(add-to-list 'auto-mode-alist '("\\.module$" . php-mode))
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.install$" . php-mode))
-(add-to-list 'auto-mode-alist '("\\.engine$" . php-mode))
  
 ;; SLIME
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
 ;(setq slime-lisp-implementations
 ;	  '((sbcl ("sbcl") :coding-system utf-8-unix)
 ;		(mit-scheme ("mit-scheme")
@@ -161,10 +158,11 @@
 (setq slime-net-coding-system 'utf-8-unix)
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
 (require 'slime)
-(require 'slime-autoloads)
+;(require 'slime-autoloads)
 (slime-setup
   '(slime-fancy slime-scratch slime-editing-commands slime-fuzzy
-				slime-presentations slime-scheme slime-repl))
+				slime-presentations slime-scheme slime-repl
+                slime-mrepl slime-indentation))
 
 ;(defmacro lisp-slime (lisp path &optional coding)
 ;  (let ((funname (intern (format "%s-slime" lisp))))
