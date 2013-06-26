@@ -15,12 +15,13 @@ prompt grouzen
 autoload -Uz compinit && compinit
 autoload -U colors && colors
 
-alias mplayerxy="mplayer -vo xv -zoom -ao alsa 2>&1 > /dev/null"
-alias mplayerxn="mplayer -vo xv -zoom -ao null 2>&1 > /dev/null"
-alias mplayerxc="mplayer -tv driver=v4l2:device=/dev/video0 tv://"
+#alias mplayerxy="mplayer -vo x11 -zoom -ao alsa 2>&1 > /dev/null"
+#alias mplayerxn="mplayer -vo x11 -zoom -ao null 2>&1 > /dev/null"
+alias mplayer2="mplayer2 -ao alsa"
 alias ls="ls --color=auto --group-directories-first"
 alias transsets="transset 0.65 > /dev/null"
 alias transsetx="transset 0.8 > /dev/null"
+alias emacs="emacs -nw"
 
 alias -g G="| grep"
 alias -g L="| less"
@@ -28,23 +29,40 @@ alias -g H="| head"
 alias -g T="| tail"
 alias -g NULL="> /dev/null"
 
-export LC_ALL=en_US.UTF-8
-PATH="/bin:/usr/bin:/usr/local/bin:/usr/X11/bin:/usr/lib/java/bin:/usr/local/php5.3/bin"; 
+alias eclipse="GTK2_RC_FILES=/home/grouzen/.gtkrc-eclipse eclipse"
+
+export GTK2_RC_FILES="/home/grouzen/.gtkrc-eclipse"
+
+PATH="/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin/:/usr/games/bin/:/opt/bin/"; 
 export PATH
+
 AWT_TOOLKIT="MToolkit"; export AWT_TOOLKIT
 BLOCKSIZE="Mb"; export BLOCKSIZE
 EDITOR="vim"; export EDITOR
+VISUAL="vim"; export VISUAL
 PAGER="less"; export PAGER
 GREP_OPTIONS="--color=auto"; export GREP_OPTIONS
-LD_LIBRARY_PATH="/usr/lib:/usr/local/php5.3/lib"; export LD_LIBRARY_PATH
+LD_LIBRARY_PATH="/usr/lib"; export LD_LIBRARY_PATH
 
-#if [ ${TERM} = "rxvt-unicode" ]; then
-#	export TERM=rxvt
-#fi
+export STARTING_CWD=~
+export INVOKED_AS=/usr/local/bin/sqldeveloper
 
 # SBCL ENVIROMENT
-#SBCL_HOME=/usr/lib/sbcl; export SBCL_HOME
-SBCL_HOME=/usr/local/lib/sbcl; export SBCL_HOME
+PATH=${PATH}:/opt/sbcl/bin:/opt/java/bin:/opt/schily/bin:/opt/idea-IU-123.94/bin; export PATH
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/avr/lib/; 
+export LD_LIBRARY_PATH
+SBCL_HOME=/usr/lib/sbcl; export SBCL_HOME
+export LC_ALL="en_US.UTF-8"
+
+
+PYTHONPATH=${PYTHONPATH}:'':./resolvers; export PYTHONPATH
+
+# Android tools
+#PATH=${PATH}:~/android-sdks/platform-tools/
+PATH=${PATH}:~/android-sdks/build-tools/17.0.0/
+# SBT (Scala)
+PATH=${PATH}:~/bin/sbt/bin/
+export PATH
 
 #CLASSPATH=
 #for jar in /opt/javaprog/*
@@ -52,6 +70,7 @@ SBCL_HOME=/usr/local/lib/sbcl; export SBCL_HOME
 #        CLASSPATH=":$jar$CLASSPATH"
 #done
 #CLASSPATH=":/opt/java/lib$CLASSPATH"; export CLASSPATH
+
 
 setopt autocd
 setopt CORRECT
@@ -100,7 +119,7 @@ umask 022
 
 # Установка заголовка терминала
 case $TERM in
-	rxvt*)
+	rxvt-unicode*)
 	precmd () {
 		print -Pn "\033]0;%n@%m%% %~ \a"
 	}
@@ -131,7 +150,7 @@ prompt_newline=$'\n%{\r%}'
 PROMPT="%{$fg[green]%}(%d)%B%{$fg[white]%}$prompt_char "
 RPROMPT="%{$reset_color%}(%T)"
 
-autoload -U tetris
-zle -N tetris
-bindkey ^T tetris
+#autoload -U tetris
+#zle -N tetris
+#bindkey ^T tetris
 

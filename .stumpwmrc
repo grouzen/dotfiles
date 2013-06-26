@@ -2,21 +2,18 @@
 (in-package :stumpwm)
 
 ;; common font
-(set-font "-*-snap-*-*-*-*-10-*-*-*-*-*-iso10646-1")
-;(set-font "-misc-dejavu sans condensed-medium-r-semicondensed--0-0-0-0-p-0-iso10646-1")
+(set-font "-*-terminus-*-*-*-*-12-*-*-*-*-*-iso10646-1")
+
 
 ;; modules
-(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/cpu.lisp")
-(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/mem.lisp")
-(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/net.lisp")
-;(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/battery.lisp")
-;(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/battery-portable.lisp")
-(load "/home/grouzen/desktop/src/sources/build/stumpwm-0.9.5-1/contrib/disk.lisp")
+(load "/usr/share/common-lisp/source/stumpwm/contrib/mem.lisp")
+(load "/usr/share/common-lisp/source/stumpwm/contrib/net.lisp")
+(load "/usr/share/common-lisp/source/stumpwm/contrib/cpu.lisp")
 
 ;; mode-line colors
 (setf *mode-line-background-color* "black")
-(setf *mode-line-foreground-color* "orange")
-(setf *mode-line-border-color* "orange")
+(setf *mode-line-foreground-color* "blue")
+(setf *mode-line-border-color* "green")
 (setf *mode-line-timeout* 1)
 
 (setf *screen-mode-line-format*
@@ -26,39 +23,33 @@
 						  t))
 			" ] "
 			"[ %n ] "
-			;"[%b] " ;; bat
 			"[%c] " ;; cpu
+            "[%t] " ;; cpu temp
 			"[%M] " ;; mem
-			;"[%D] " ;; disk
+            "[%P] " ;; swap
 			"[%l] " ;; net
 			"%W"))
 
-;(defun update-mode-line ()
-;  "Update mode line"
-;  (let ((screen (current-screen)))
-;	(when (screen-mode-line screen)
-;	  (redraw-mode-line-for (screen-mode-line screen) screen))))
-
-;#+sbcl (sb-ext:shedule-timer
-;		*mode-line-timer* (sb-ext:make-timer
-;						   #'update-mode-line
-;						   :name "mode-line-updating"
-;						   :thread (car (last (sb-thread:list-all-threads)))))
-
-;#+sbcl (sb-ext:shedule-timer *mode-line-timer* 5 :repeat-interval 10 :absolue-p nil)
-
-(run-commands "mode-line")
+(run-commands "mode-line"
+              "gnewbg 2"
+              "gnewbg 3"
+              "gnewbg 4"
+              "gnewbg 5"
+              "gnewbg 6"
+              "gnewbg 7"
+              "gnewbg 8"
+              "gnewbg 9")
 
 ;; input and message panels
 (set-bg-color "black")
-(set-fg-color "orange")
-(set-border-color "orange")
+(set-fg-color "green")
+(set-border-color "green")
 (setf *message-window-gravity* :bottom-right)
 (setf *input-window-gravity* :bottom-right)
 (set-normal-gravity :center)
-(set-win-bg-color "white")
+(set-win-bg-color "black")
 
-(set-focus-color "orange")
+(set-focus-color "green")
 (set-unfocus-color "blue")
 
 (setf *frame-number-map* "1234567890")
@@ -67,3 +58,4 @@
 ;; keys
 (define-key *root-map* (kbd "C-c") "exec urxvt")
 (define-key *root-map* (kbd "c") "exec urxvt")
+

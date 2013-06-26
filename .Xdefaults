@@ -1,5 +1,5 @@
 URxvt*background: black
-URxvt*foreground: orange
+URxvt*foreground: green
 URxvt*transparent: true
 URxvt*shading: 40
 URxvt*scrollBar: false

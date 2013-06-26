@@ -21,8 +21,6 @@
  '(ecb-tree-indent 1)
  '(ecb-windows-width 0.12)
  '(global-font-lock-mode t nil (font-lock))
- '(jabber-account-list (quote (("grouzen@jabber.ru" (:password . "") (:network-server . "jabber.ru") (:port . 5222) (:connection-type . network)))))
- '(jabber-default-show "")
  '(menu-bar-mode nil nil (menu-bar))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
@@ -41,42 +39,12 @@
 ;(display-battery-mode)
 ;(display-time-mode)
 
-;; VM
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/vm")
-
-;(autoload 'vm "vm" "Start VM on your primary inbox." t)
-;(autoload 'vm-other-frame "vm" "Like `vm' but starts in another frame." t)
-;(autoload 'vm-visit-folder "vm" "Start VM on an arbitrary folder." t)
-;(autoload 'vm-visit-virtual-folder "vm" "Visit a VM virtual folder." t)
-;(autoload 'vm-mode "vm" "Run VM major mode on a buffer" t)
-;';(autoload 'vm-mail "vm" "Send a mail message using VM." t)
-;(autoload 'vm-submit-bug-report "vm" "Send a bug report about VM." t)
-
-;(setq user-full-name "Michail N."
-;      user-mail-address "gro19u89zen@gmail.com"
-;      vm-spool-files
-;      '(("/home/grouzen/Mail/INBOX"
-;         "pop-ssl:pop.gmail.com:995:pass:username:*"
-;         "/home/grouzen/Mail/INBOX.CRASH")))
-
-;; nxhtml-mode
-; (load "/usr/share/emacs/site-lisp/nxhtml/autostart.el")
-
 ;; Haskell-mode
-(setq haskell-font-lock-symbols t)
-(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
-(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-(add-hook 'haskell-mode-hook 'turn-on-indentation)
-
-;; GNUS
-;(setq gnus-select-method '(nnimap "gmail"
-;                                  (nnimap-address "imap.gmail.com")
-;                                  (nnimap-server-port 993)
-;                                  (nnimap-stream ssl)))
-
-;(setq sendmail-program "/usr/bin/msmtp")
-;(setq message-send-mail-function 'message-send-mail-with-sendmail)
+;(setq haskell-font-lock-symbols t)
+;(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+;(add-hook 'haskell-mode-hook 'turn-on-indentation)
 
 ;; Javascript-mode
 ;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
@@ -97,21 +65,11 @@
 ;; color-theme
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/color-theme/")
 (require 'color-theme)
-(load "~/.emacs.d/.color-themes.el")
+;(load "~/.emacs.d/.color-themes.el")
 (eval-after-load "color-theme"
   '(progn
 	 (color-theme-initialize)
-	 (color-theme-stumpwm)))
- 
-;; FB2 reader
-(add-to-list 'auto-mode-alist '("\\.fb2$" . fbread-mode))
- 
-(defun fbread-mode ()
-  (interactive)
-  (sgml-mode)
-  (sgml-tags-invisible 0)
-  (longlines-mode)
-  (view-mode))
+	 (color-theme-lawrence)))
 
 ;; HyperSpec
 ;(setq common-lisp-hyperspec-root "/home/grouzen/desktop/media/books/HyperSpec/")
@@ -123,46 +81,32 @@
 (setq org-todo-keywords
 	  '((sequence "TODO" "ACTIVE" "WAITING" "PAUSE" "|" "DONE" "CANCELLED")))
 
-;; Wanderlust
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/apel")
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/flim")
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/semi")
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/wl")
-;(add-to-list 'load-path
-;			 (expand-file-name "packages/apel" user-emacs-directory))
-;(add-to-list 'load-path
-;			 (expand-file-name "packages/flim" user-emacs-directory))
-;(add-to-list 'load-path
-;			 (expand-file-name "packages/semi" user-emacs-directory))
-;(add-to-list 'load-path
-;			 (expand-file-name "packages/more-wl/wl" user-emacs-directory))
-;(add-to-list 'load-path
-;			 (expand-file-name "packages/more-wl/elmo" user-emacs-directory))
-
-;(load-file "~/.wl")
-
-;; Mercurial
-;;(require 'mercurial)
 
 ;; PHP-mode
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/php-mode")
 (require 'php-mode)
 (add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
- 
+
+;; Markdown-mode
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/markdown-mode")
+(require 'markdown-mode)
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+
 ;; SLIME
-(setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
+;(setq inferior-lisp-program "/usr/bin/sbcl")
 ;(setq slime-lisp-implementations
 ;	  '((sbcl ("sbcl") :coding-system utf-8-unix)
 ;		(mit-scheme ("mit-scheme")
 ;					:coding-system utf-8-unix
 ;					:init mit-scheme-init)))
-(setq slime-net-coding-system 'utf-8-unix)
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
-(require 'slime)
+;(setq slime-net-coding-system 'utf-8-unix)
+;(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
+;(require 'slime)
 ;(require 'slime-autoloads)
-(slime-setup
-  '(slime-fancy slime-scratch slime-editing-commands slime-fuzzy
-				slime-presentations slime-scheme slime-repl
-                slime-mrepl slime-indentation))
+;(slime-setup
+;  '(slime-fancy slime-scratch slime-editing-commands slime-fuzzy
+;				slime-presentations slime-scheme slime-repl
+;                slime-mrepl slime-indentation))
 
 ;(defmacro lisp-slime (lisp path &optional coding)
 ;  (let ((funname (intern (format "%s-slime" lisp))))
@@ -208,14 +152,6 @@
 ;(setq slime-find-buffer-package-function 'find-mit-scheme-package)
 ;; END SLIME
 
-;; Jabber.el
-;;(require 'jabber)
-;;(require 'jabber-autoloads)
-;;(jabber-connect-all)
-;; (("grouzen@jabber.ru"
- ;; (:password . "")
- ;; (:connection-type . network)))
-
 ;; IDO
 (ido-mode t)
 (global-set-key [C-xb] 'ido-switch-buffer)
@@ -227,21 +163,13 @@
 (require 'escreen)
 
 ;;Load CEDET
-(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
+;(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
 ;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
 
 ;; ECB
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
 (require 'ecb)
 (ecb-activate)
-
-;; elib
-;;(setq load-path (append (list "/usr/share/emacs/site-lisp/elib")
-	;;					load-path))
-
-;; JDE
-;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/jde/lisp")
-;;(require 'jde)
 
 ;; menu bar
 (menu-bar-mode -1)
@@ -261,8 +189,8 @@
 (fset 'yes-or-no-p 'y-or-n-p)
 
 ;; bookmarks
-(global-set-key [f5] 'bookmark-set)
-(global-set-key [f6] 'bookmark-jump)
+;(global-set-key [f5] 'bookmark-set)
+;(global-set-key [f6] 'bookmark-jump)
 
 ;; workspaces
 ;;(global-set-key [?\C-q] 'workspace-goto)
@@ -298,6 +226,9 @@
 (defun my-scheme-mode-hook ()
   (setq tab-width 2))
 
+(defun my-html-mode-hook ()
+  (set sgml-basic-offset 4))
+
 (add-hook 'scheme-mode-hook 'my-ret-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'c++-mode-hook 'my-ret-hook)
@@ -314,27 +245,28 @@
 (add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'javascript-mode-hook 'my-ret-hook)
 (add-hook 'php-mode-hook 'my-ret-hook)
+(add-hook 'html-mode-hook
+          (lambda ()
+            ;; Default indentation is usually 2 spaces, changing to 4.
+            (set (make-local-variable 'sgml-basic-offset) 4)))
 
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(wl-highlight-message-citation-header ((((class color) (background light)) (:foreground "LightGray"))))
- '(wl-highlight-message-header-contents ((t (:foreground "white" :weight bold))))
- '(wl-highlight-message-important-header-contents ((t (:foreground "white" :weight bold))))
- '(wl-highlight-message-important-header-contents2 ((t (:foreground " " :weight bold))))
- '(wl-highlight-message-signature ((((class color) (background light)) (:foreground "grey"))))
- '(wl-highlight-message-unimportant-header-contents ((t (:foreground "LightGray" :weight bold))))
- '(wl-highlight-summary-normal-face ((((class color) (background light)) (:foreground "LightGreen")))))
+;(defun my-save-and-compile-gcc ()
+;  "save and call copmile as gcc -Wall"
+;  (interactive)
+;  (save-buffer)
+;  (compile (concat "gcc -g -Wall " (buffer-file-name)" -o " (file-name-sans-extension
+;                                                             buffer-file-name)))
+;  (message "Compilation executed!"))
 
-(defun my-save-and-compile-gcc ()
-  "save and call copmile as gcc -Wall"
-  (interactive)
-  (save-buffer)
-  (compile (concat "gcc -g -Wall " (buffer-file-name)" -o " (file-name-sans-extension
-                                                             buffer-file-name)))
-  (message "Compilation executed!"))
+;(defun prelude-google ()
+;  "Googles a query or region if any."
+;  (interactive)
+;  (browse-url
+;   (concat
+;    "http://www.google.com/search?ie=utf-8&oe=utf-8&q="
+;    (if mark-active
+;        (buffer-substring (region-beginning) (region-end))
+;      (read-string "Google: ")))))
 
 (global-set-key [f7] 'my-save-and-compile-gcc)
 (global-set-key "\C-w" 'backward-kill-word)
@@ -361,4 +293,7 @@
 (global-set-key (kbd "\e\ewn") 'escreen-goto-next-screen)
 (global-set-key (kbd "\e\ewp") 'escreen-goto-prev-screen)
 
-(mouse-wheel-mode 1)
+;(mouse-wheel-mode 1)
+
+(ecb-toggle-ecb-windows)
+
