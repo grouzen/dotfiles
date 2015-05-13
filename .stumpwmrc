@@ -1,34 +1,55 @@
-;;; -*- lisp -*-
-(in-package :stumpwm)
+;;; -*- Mode: Lisp -*-
 
-;; common font
+(in-package #:stumpwm)
+
 (set-font "-*-terminus-*-*-*-*-12-*-*-*-*-*-iso10646-1")
 
+(defparameter *fc* "Gray50")
+(defparameter *bc* "Gray20")
 
-;; modules
-(load "/usr/share/common-lisp/source/stumpwm/contrib/mem.lisp")
-(load "/usr/share/common-lisp/source/stumpwm/contrib/net.lisp")
-(load "/usr/share/common-lisp/source/stumpwm/contrib/cpu.lisp")
+(set-module-dir "/home/grouzen/projects/stumpwm-contrib")
 
-;; mode-line colors
-(setf *mode-line-background-color* "black")
-(setf *mode-line-foreground-color* "blue")
-(setf *mode-line-border-color* "green")
-(setf *mode-line-timeout* 1)
+;; Loading contrib modules
+(loop :for m :in '("mem" "cpu" "net" "battery") ; "weather")
+   :do (stumpwm:load-module m))
+
+;(setq weather:*weather-format* "W: %wind %weather | V: %visibility | S: %skycond | T: %temp | P: %pressure")
 
 (setf *screen-mode-line-format*
-	  (list "[ "
-			'(:eval (run-shell-command
-						  "date '+%a %d %b %H:%M:%S' | tr -d [:cntrl:]"
-						  t))
-			" ] "
-			"[ %n ] "
-			"[%c] " ;; cpu
-            "[%t] " ;; cpu temp
-			"[%M] " ;; mem
-            "[%P] " ;; swap
-			"[%l] " ;; net
-			"%W"))
+      (list
+       "[ %d ]"  ; time
+       "[ %n ]" ; workspace number
+       "[ %t ]" ; cpu temp
+       "[%c]"   ; cpu load
+       "[%b]"   ; battery
+       "[%M]"   ; mem
+       "[%l]"   ; net
+       ;;"[%p]"   ; weather
+       ))
+
+(progn
+  (setf *mode-line-background-color* *bc*)
+  (setf *mode-line-foreground-color* *fc*)
+  (setf *mode-line-border-color* *fc*)
+  (setf *mode-line-timeout* 1)
+
+  (set-bg-color *bc*)
+  (set-fg-color *fc*)
+  (set-border-color *fc*)
+  (setf *message-window-gravity* :bottom-right)
+  (setf *input-window-gravity*   :bottom-right)
+  (set-normal-gravity :center)
+  (set-win-bg-color *bc*)
+  (set-focus-color *fc*)
+  (set-unfocus-color *bc*))
+
+(setf *frame-number-map* "1234567890")
+(setf (group-name (first (screen-groups (current-screen)))) "1")
+
+;; Key bindings
+(define-key *root-map* (kbd "C-c") "exec urxvt")
+(define-key *root-map* (kbd "c")   "exec urxvt")
+(define-key *root-map* (kbd "j")   "exec xscreensaver-command -lock")
 
 (run-commands "mode-line"
               "gnewbg 2"
@@ -40,22 +61,29 @@
               "gnewbg 8"
               "gnewbg 9")
 
-;; input and message panels
-(set-bg-color "black")
-(set-fg-color "green")
-(set-border-color "green")
-(setf *message-window-gravity* :bottom-right)
-(setf *input-window-gravity* :bottom-right)
-(set-normal-gravity :center)
-(set-win-bg-color "black")
+(ql:quickload :swank)
 
-(set-focus-color "green")
-(set-unfocus-color "blue")
+;; Load swank.
+;; *prefix-key* ; swank will kick this off
+(load "/home/grouzen/quicklisp/dists/quicklisp/software/slime-2.10.1/swank-loader.lisp")
+(swank-loader:init)
 
-(setf *frame-number-map* "1234567890")
-(setf (group-name (first (screen-groups (current-screen)))) "1")
-
-;; keys
-(define-key *root-map* (kbd "C-c") "exec urxvt")
-(define-key *root-map* (kbd "c") "exec urxvt")
-
+(let ((server-running nil))
+  (defcommand swank () ()
+    "Toggle the swank server on/off"
+    (if server-running
+	(progn
+	  (swank:stop-server 4005)
+	  (echo-string
+	   (current-screen)
+	   "Stopping swank.")
+	  (setf server-running nil))
+	(progn
+	  (swank:create-server :port 4005
+			       :style swank:*communication-style*
+			       :dont-close t)
+	  (echo-string
+	   (current-screen)
+	   "Starting swank. M-x slime-connect RET RET, then (in-package stumpwm).")
+	  (setf server-running t))))
+  (define-key *root-map* (kbd "C-s") "swank"))

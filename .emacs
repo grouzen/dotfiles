@@ -1,8 +1,9 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(agda2-include-dirs (quote ("/home/grouzen/sources/agda-stdlib-0.9/src" ".")))
  '(c-basic-offset 4)
  '(c-label-minimum-indentation 4)
  '(c-syntactic-indentation t)
@@ -12,15 +13,8 @@
  '(current-language-environment "UTF-8")
  '(cursor-in-non-selected-windows nil)
  '(default-input-method "rfc1345")
- '(ecb-compilation-buffer-names (quote (("*Calculator*") ("*vc*") ("*vc-diff*") ("*Apropos*") ("*Occur*") ("*shell*" . t) ("\\*[cC]ompilation.*\\*" . t) ("*JDEE Compile Server*") ("*Help*") ("*Completions*") ("*Backtrace*" . t) ("*Compile-log*") ("*bsh*") ("*Messages*") ("\\*gud-.*\\*" . t))))
- '(ecb-compile-window-height 4)
- '(ecb-compile-window-temporally-enlarge (quote after-selection))
- '(ecb-compile-window-width (quote edit-window))
- '(ecb-layout-name "left8")
- '(ecb-options-version "2.40")
- '(ecb-tree-indent 1)
- '(ecb-windows-width 0.12)
  '(global-font-lock-mode t nil (font-lock))
+ '(markdown-command "pandoc -s")
  '(menu-bar-mode nil nil (menu-bar))
  '(scheme-program-name "guile")
  '(scroll-bar-mode nil)
@@ -31,20 +25,65 @@
  '(transient-mark-mode t)
  '(truncate-lines t))
 
+;; MELPA
+(require 'package)
+(add-to-list 'package-archives '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+(package-initialize)
+
+;(require 'highlight-sexps)
+;(add-hook 'lisp-mode-hook 'highlight-sexps-mode)
+;(setq hl-sexp-background-colors '("gray20" "gray30" "gray40"))
+
+; Copy from console emacs to X buffer
+;(setq interprogram-cut-function
+;      (lambda (text &optional push)
+;                    (let* ((process-connection-type nil)
+;                           (xcliproxy (start-process "xclip" "xclip" "/usr/bin/xclip")))
+;                      (process-send-string xcliproxy text)
+;                      (process-send-eof xcliproxy))))
+
 (setq-default indent-tabs-mode nil)
 ;(toggle-word-wrap 1)
 ;(toggle-truncate-lines 1)
 
-;; Display statistic in the status bar
-;(display-battery-mode)
-;(display-time-mode)
+;; Golang mode
+(add-to-list 'load-path "~/.emacs.d/go-mode.el")
+(require 'go-mode-autoloads)
+
+;; YAML mode
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/yaml-mode")
+(require 'yaml-mode)
+
+;; Yasnippet
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/yasnippet")
+(require 'yasnippet)
+
+;; Scala mode, Ensime
+(add-to-list 'load-path "/opt/ensime_2.10.0-RC3-0.9.8.2/elisp/")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+
+(add-to-list 'load-path "/usr/share/emacs/site-lisp/scala-mode")
+(require 'scala-mode-auto)
+
+;; (add-hook 'scala-mode-hook
+;;           '(lambda ()
+;;              (yas/minor-mode-on)))
 
 ;; Haskell-mode
-;(setq haskell-font-lock-symbols t)
-;(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
-;(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
-;(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-;(add-hook 'haskell-mode-hook 'turn-on-indentation)
+(setq haskell-font-lock-symbols t)
+(load "/usr/share/emacs/site-lisp/haskell-mode/haskell-site-file")
+(add-hook 'haskell-mode-hook 'turn-on-haskell-font-lock)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-indentation)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;; Flycheck for Haskell
+(add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)
+;; hdevtools
+(eval-after-load 'flycheck '(require 'flycheck-hdevtools))
+
+
+
 
 ;; Javascript-mode
 ;(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
@@ -65,11 +104,11 @@
 ;; color-theme
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/color-theme/")
 (require 'color-theme)
-;(load "~/.emacs.d/.color-themes.el")
 (eval-after-load "color-theme"
   '(progn
 	 (color-theme-initialize)
-	 (color-theme-lawrence)))
+     (load "~/.emacs.d/color-themes.el")
+	 (color-theme-my-charcoal-black)))
 
 ;; HyperSpec
 ;(setq common-lisp-hyperspec-root "/home/grouzen/desktop/media/books/HyperSpec/")
@@ -81,26 +120,23 @@
 (setq org-todo-keywords
 	  '((sequence "TODO" "ACTIVE" "WAITING" "PAUSE" "|" "DONE" "CANCELLED")))
 
-
-;; PHP-mode
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/php-mode")
-(require 'php-mode)
-(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
-
 ;; Markdown-mode
 (add-to-list 'load-path "/usr/share/emacs/site-lisp/markdown-mode")
 (require 'markdown-mode)
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
 
 ;; SLIME
-;(setq inferior-lisp-program "/usr/bin/sbcl")
-;(setq slime-lisp-implementations
-;	  '((sbcl ("sbcl") :coding-system utf-8-unix)
-;		(mit-scheme ("mit-scheme")
-;					:coding-system utf-8-unix
-;					:init mit-scheme-init)))
-;(setq slime-net-coding-system 'utf-8-unix)
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/slime")
+;; quicklisp way
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "/usr/bin/sbcl")
+(setq slime-lisp-implementations
+      '((sbcl ("sbcl") :coding-system utf-8-unix)
+        (ccl  ("ccl") :coding-system utf-8-unix)
+		(mit-scheme ("mit-scheme")
+					:coding-system utf-8-unix
+					:init mit-scheme-init)))
+(setq slime-net-coding-system 'utf-8-unix)
+
 ;(require 'slime)
 ;(require 'slime-autoloads)
 ;(slime-setup
@@ -158,18 +194,6 @@
 
 ;; Workspaces
 ;;(require 'workspaces)
-
-;; Escreen
-(require 'escreen)
-
-;;Load CEDET
-;(load-file "/usr/share/emacs/site-lisp/cedet/common/cedet.el")
-;;(add-to-list 'load-path "/usr/share/emacs/site-lisp/emhacks")
-
-;; ECB
-(add-to-list 'load-path "/usr/share/emacs/site-lisp/ecb")
-(require 'ecb)
-(ecb-activate)
 
 ;; menu bar
 (menu-bar-mode -1)
@@ -229,6 +253,9 @@
 (defun my-html-mode-hook ()
   (set sgml-basic-offset 4))
 
+(defun my-javascript-mode-hook ()
+  (setq tab-width 2))
+
 (add-hook 'scheme-mode-hook 'my-ret-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'c++-mode-hook 'my-ret-hook)
@@ -243,7 +270,7 @@
 (add-hook 'css-mode-hook 'my-ret-hook)
 (add-hook 'c++-mode-hook 'my-c++-mode-hook)
 (add-hook 'c-mode-hook 'my-c-mode-hook)
-(add-hook 'javascript-mode-hook 'my-ret-hook)
+(add-hook 'javascript-mode-hook 'my-javascript-mode-hook)
 (add-hook 'php-mode-hook 'my-ret-hook)
 (add-hook 'html-mode-hook
           (lambda ()
@@ -272,28 +299,13 @@
 (global-set-key "\C-w" 'backward-kill-word)
 (global-set-key "\C-x\C-k" 'kill-region)
 
-(global-set-key (kbd "\e\eE") 'ecb-activate)
-(global-set-key (kbd "\e\egd") 'ecb-goto-window-directories)
-(global-set-key (kbd "\e\egs") 'ecb-goto-window-sources)
-(global-set-key (kbd "\e\egm") 'ecb-goto-window-methods)
-(global-set-key (kbd "\e\egh") 'ecb-goto-window-history)
-(global-set-key (kbd "\e\ega") 'ecb-goto-window-analyse)
-(global-set-key (kbd "\e\egb") 'ecb-goto-window-speedbar)
-(global-set-key (kbd "\e\egc") 'ecb-goto-window-compilation)
-(global-set-key (kbd "\e\eg1") 'ecb-goto-window-edit1)
-(global-set-key (kbd "\e\eg2") 'ecb-goto-window-edit2)
-(global-set-key (kbd "\e\egt") 'ecb-toggle-ecb-windows)
 (global-set-key (kbd "\e\ee")  'eshell)
 
-(global-set-key (kbd "\e\ewl") 'escreen-goto-last-screen)
-(global-set-key (kbd "\e\ewm") 'escreen-menu)
-(global-set-key (kbd "\e\ewt") 'escreen-goto-screen)
-(global-set-key (kbd "\e\ewc") 'escreen-create-screen)
-(global-set-key (kbd "\e\ewk") 'escreen-kill-screen)
-(global-set-key (kbd "\e\ewn") 'escreen-goto-next-screen)
-(global-set-key (kbd "\e\ewp") 'escreen-goto-prev-screen)
-
-;(mouse-wheel-mode 1)
-
-(ecb-toggle-ecb-windows)
-
+(load-file (let ((coding-system-for-read 'utf-8))
+             (shell-command-to-string "agda-mode locate")))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

@@ -1,7 +1,8 @@
-URxvt*background: black
-URxvt*foreground: green
+URxvt*background: Gray20
+URxvt*foreground: Gray50
 URxvt*transparent: true
 URxvt*shading: 40
+URxvt.fading: 60
 URxvt*scrollBar: false
 URxvt*font: -*-terminus-medium-r-normal--12-*-*-*-*-*-iso10646-1
 
@@ -11,4 +12,9 @@ URxvt.underlineURLs: true
 URxvt.matcher.rend.0: fg2
 URxvt.keysym.C-i: perl:mark-yank-urls:activate_mark_mode
 URxvt*urlLauncher: urlopen
+
+#Emacs*font:-xos4-terminus-medium-r-normal--14-*-72-72-c-80-iso10646-1
+#Emacs*font: DejaVu Sans Mono:size=12:antialias=true
+Emacs*font: Liberation Mono:size=12:antialias=true:hint=true
+
 

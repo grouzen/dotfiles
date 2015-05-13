@@ -15,28 +15,25 @@ prompt grouzen
 autoload -Uz compinit && compinit
 autoload -U colors && colors
 
-#alias mplayerxy="mplayer -vo x11 -zoom -ao alsa 2>&1 > /dev/null"
-#alias mplayerxn="mplayer -vo x11 -zoom -ao null 2>&1 > /dev/null"
-alias mplayer2="mplayer2 -ao alsa"
 alias ls="ls --color=auto --group-directories-first"
-alias transsets="transset 0.65 > /dev/null"
-alias transsetx="transset 0.8 > /dev/null"
-alias emacs="emacs -nw"
 
 alias -g G="| grep"
 alias -g L="| less"
 alias -g H="| head"
 alias -g T="| tail"
 alias -g NULL="> /dev/null"
-
-alias eclipse="GTK2_RC_FILES=/home/grouzen/.gtkrc-eclipse eclipse"
+alias mplayer=mpv
+alias -g webhttpcrap="python -m http.server"
+alias chrome="google-chrome-stable"
 
 export GTK2_RC_FILES="/home/grouzen/.gtkrc-eclipse"
 
-PATH="/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin/:/usr/games/bin/:/opt/bin/"; 
+PATH="/bin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/X11/bin/:/usr/games/bin/:/opt/bin/:/home/grouzen/bin"; 
 export PATH
 
-AWT_TOOLKIT="MToolkit"; export AWT_TOOLKIT
+GOPATH="$HOME/prog/go"
+export GOPATH
+
 BLOCKSIZE="Mb"; export BLOCKSIZE
 EDITOR="vim"; export EDITOR
 VISUAL="vim"; export VISUAL
@@ -44,33 +41,22 @@ PAGER="less"; export PAGER
 GREP_OPTIONS="--color=auto"; export GREP_OPTIONS
 LD_LIBRARY_PATH="/usr/lib"; export LD_LIBRARY_PATH
 
-export STARTING_CWD=~
-export INVOKED_AS=/usr/local/bin/sqldeveloper
-
 # SBCL ENVIROMENT
-PATH=${PATH}:/opt/sbcl/bin:/opt/java/bin:/opt/schily/bin:/opt/idea-IU-123.94/bin; export PATH
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/avr/lib/; 
-export LD_LIBRARY_PATH
-SBCL_HOME=/usr/lib/sbcl; export SBCL_HOME
+SBCL_HOME=/usr/lib64/sbcl; export SBCL_HOME
+
 export LC_ALL="en_US.UTF-8"
 
 
-PYTHONPATH=${PYTHONPATH}:'':./resolvers; export PYTHONPATH
-
 # Android tools
-#PATH=${PATH}:~/android-sdks/platform-tools/
-PATH=${PATH}:~/android-sdks/build-tools/17.0.0/
-# SBT (Scala)
-PATH=${PATH}:~/bin/sbt/bin/
+PATH=${PATH}:~/android-sdks/platform-tools/
 export PATH
 
-#CLASSPATH=
-#for jar in /opt/javaprog/*
-#do
-#        CLASSPATH=":$jar$CLASSPATH"
-#done
-#CLASSPATH=":/opt/java/lib$CLASSPATH"; export CLASSPATH
+# Play2 framework
+PATH=${PATH}:~/sources/play-2.2.3-RC2
+export PATH
 
+# Cabal (Haskell) binaries
+PATH=${PATH}:~/.cabal/bin; export PATH
 
 setopt autocd
 setopt CORRECT
@@ -84,7 +70,6 @@ HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=10000
 
-# Установка нормального поведения клавиш Delete, Home, End и т.д.:
 case $TERM in
 	linux*)
 	bindkey "^[[2~" yank
@@ -99,14 +84,10 @@ case $TERM in
 	bindkey " " magic-space
 	;;
 	*xterm*|*rxvt*|(dt|k|E)term)
-#	rxvt-unicode)
 	bindkey "^[[2~" yank
 	bindkey "^[[3~" delete-char
 	bindkey "^[[5~" up-line-or-history
 	bindkey "^[[6~" down-line-or-history
-#	bindkey "^[[H"  beginning-of-line
-#	bindkey "^[[F"  end-of-line
-#	bindkey "^[e"   expand-cmd-path
 	bindkey "^[[A"  up-line-or-search
 	bindkey "^[[B"  down-line-or-search
 	bindkey " " magic-space
@@ -117,7 +98,6 @@ esac
 
 umask 022
 
-# Установка заголовка терминала
 case $TERM in
 	rxvt-unicode*)
 	precmd () {
@@ -149,8 +129,4 @@ prompt_char="%(!.#.%%)"
 prompt_newline=$'\n%{\r%}'
 PROMPT="%{$fg[green]%}(%d)%B%{$fg[white]%}$prompt_char "
 RPROMPT="%{$reset_color%}(%T)"
-
-#autoload -U tetris
-#zle -N tetris
-#bindkey ^T tetris
 
